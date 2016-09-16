@@ -40,7 +40,7 @@ public class LongInt {
   }
 
   private int isAbsBiggerThan(LongInt opnd){
-    // 1인 경우 this > opnd, -1인 경우 this < opnd, 0인 경우 this = opnd
+    // if 1, this > opnd, if -1, this < opnd, if 0, this = opnd
     if(this.getLength() > opnd.getLength()) return 1;
     else if(this.getLength() < opnd.getLength()) return -1;
     else{
@@ -56,7 +56,6 @@ public class LongInt {
   }
 
   private LongInt childMultiply(int digit, int tens){
-//    System.out.println(String.format("digit : %d, tens : %d", digit, tens));
     int maxLength = this.getLength() + 1, upperAdd = 0;
     StringBuffer strBuf = new StringBuffer();
 
@@ -79,13 +78,12 @@ public class LongInt {
     for(int i=0;i<tens;i++){
       strBuf.append("0");
     }
-//    System.out.println(String.format("final string : %s", strBuf.toString()));
 
     return new LongInt(strBuf.toString());
   }
 
   private String childSubtract(LongInt opnd){
-    // 항상 this가 opnd보다 큰 경우를 스트링 형태로 리턴
+    // Always this > opnd. Return as String type.
     int maxLength = Math.max(this.getLength(), opnd.getLength()), upperMinus = 0;
     StringBuffer strBuf = new StringBuffer();
 
@@ -93,10 +91,7 @@ public class LongInt {
       int temp1, temp2, result;
       temp1 = this.getDigitByIndex(i);
       temp2 = opnd.getDigitByIndex(i);
-//      System.out.println(String.format("this is pair : %d, %d", temp1, temp2));
-//      System.out.println(String.format("this is index : %d", i));
       result = temp1 - temp2 - upperMinus;
-//      System.out.println(String.format("this is result : %d", result));
       upperMinus = 0;
 
       if(result < 0){
@@ -137,10 +132,7 @@ public class LongInt {
       int temp1, temp2, result;
       temp1 = this.getDigitByIndex(i);
       temp2 = opnd.getDigitByIndex(i);
-//      System.out.println(String.format("this is pair : %d, %d", temp1, temp2));
-//      System.out.println(String.format("this is index : %d", i));
       result = temp1 + temp2 + upperAdd;
-//      System.out.println(String.format("this is result : %d", result));
       upperAdd = 0;
 
       if(result > 9){
@@ -205,9 +197,6 @@ public class LongInt {
     for(int i=0; i<opnd.getLength(); i++){
       temp = this.childMultiply(opnd.getDigitByIndex(i), i);
       result = result.add(temp);
-//      System.out.print("this is result : ");
-//      result.print();
-//      System.out.println();
     }
 
     if(!this.isPlus() && opnd.isPlus() || this.isPlus() && !opnd.isPlus()) result.setIsPlus(false);
@@ -221,7 +210,6 @@ public class LongInt {
   public void print() {
     StringBuffer strBuf = new StringBuffer();
     if(!this.isPlus()) strBuf.append('-');
-//    System.out.println(this.isPlus());
 
     for(int i=0; i<this.length; i++){
       strBuf.append(this.invertedIntArray[this.length - i - 1]);
@@ -233,11 +221,5 @@ public class LongInt {
     return this.length;
   }
 
-  public static void main(String[] args) {
-    LongInt l1 = new LongInt("0");
-    LongInt l2 = new LongInt("-9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999");
-//    LongInt l3 = l1.subtract(l2);
-    l2.print();
-  }
 }
 
